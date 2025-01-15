@@ -49,9 +49,9 @@ export default function SignUp() {
     <div className='mx-auto max-w-lg'>
       <div className='text-green-600 font-bold text-center text-2xl my-10 uppercase'>Sign up</div>
       <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
-        <input type="text" placeholder='Username' id='username' className='border p-2' onChange={handleChange} />
-        <input type="email" placeholder='Email' id='email' className='border p-2' onChange={handleChange} />
-        <input type="password" placeholder='Password' id='password' className='border p-2' onChange={handleChange} />
+        <input type="text" placeholder='Username' id='username' className='border p-2' onChange={handleChange} required/>
+        <input type="email" placeholder='Email' id='email' className='border p-2' onChange={handleChange} required/>
+        <input type="password" placeholder='Password' id='password' className='border p-2' onChange={handleChange} required/>
         <button disabled={loading} className='p-2 bg-green-500 text-white hover:underline'>{loading? 'Wait, loading': 'Sign Up'}</button>
       </form>
       <div className='mt-7 text-center'>
