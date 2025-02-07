@@ -47,11 +47,11 @@ export default function SignIn() {
 
   return (
     <div className='mx-auto max-w-lg'>
-      <div className='text-green-600 font-bold text-center text-2xl my-10 uppercase'>Sign In</div>
+      <div className='text-green-600 font-bold text-center text-2xl my-10'>Welcome back to FurryFriends!</div>
       <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
         <input type="email" placeholder='Email' id='email' className='border p-2' onChange={handleChange} required/>
         <input type="password" placeholder='Password' id='password' className='border p-2' onChange={handleChange} required/>
-        <button disabled={loading} className='p-2 bg-green-500 text-white hover:underline'>{loading? 'Wait, loading': 'Sign In'}</button>
+        <button disabled={loading} className='p-2 bg-rose-400 text-white hover:underline'>{loading? 'Wait, loading': 'Sign In'}</button>
       </form>
       <div className='mt-7 text-center'>
         <Link to='/sign-up'>
