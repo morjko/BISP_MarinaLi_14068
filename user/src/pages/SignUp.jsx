@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {signInStart, signInSuccess, signInFailure} from '../redux/user/userSlice.js';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -19,7 +21,7 @@ export default function SignUp() {
     e.preventDefault();
 
     try {
-      setLoading(true);
+      dispatch(signInStart());
     
       const res = await fetch('/api/auth/signup', 
         {
@@ -32,22 +34,20 @@ export default function SignUp() {
       );
       const data = await res.json();
       if(data.success===false) {
-        setError(data.message);
-        setLoading(false);
+        dispatch(signInFailure(data.message));
         return
       }
-      setLoading(false);
-      setError(null);
+      dispatch(signInSuccess(data));
       navigate('/sign-in')
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      dispatch(signInFailure(error.message));
     }
   }
 
   return (
     <div className='mx-auto max-w-lg'>
       <div className='text-green-600 font-bold text-center text-2xl my-10'>Welcome to FurryFriends!</div>
+      {error && <p className='text-red-700 mb-12 text-center'>{error}</p>}
       <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
         <input type="text" placeholder='Username' id='username' className='border p-2' onChange={handleChange} required/>
         <input type="email" placeholder='Email' id='email' className='border p-2' onChange={handleChange} required/>
@@ -59,7 +59,6 @@ export default function SignUp() {
             <p className='text-green-600 hover:underline hidden sm:inline'>Already have an account?</p>
         </Link>
       </div>
-      {error && <p className='text-red-300 mt-12'>* {error}</p>}
     </div>
   )
 }
