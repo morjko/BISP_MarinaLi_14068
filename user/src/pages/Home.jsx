@@ -13,5 +13,3 @@ export default function Home() {
     </div>
   )
 }
-
-//className='bg-cover bg-center' style="background-image: url('./img/bisp_img_1.jpeg');"
