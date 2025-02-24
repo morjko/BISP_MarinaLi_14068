@@ -20,11 +20,6 @@ export default function Profile() {
   }, [file]);
 
   const handleFileUpload = (file) => {
-    if (file.size>3*1024*1024*1024) {
-      setFileUploadError(true);
-      return;
-    }
-
     const storage = getStorage(app);
     const fileName = new Date().getTime()+file.name;
     const storageRef = ref(storage, fileName);
