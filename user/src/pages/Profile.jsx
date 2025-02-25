@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
 import { app } from '../firebase';
-import {getFirestore, doc, setDoc} from 'firebase/firestore';
+import { signOutFailure, signOutStart, signOutSuccess } from '../redux/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
   const {currentUser} = useSelector((state) => state.user);
@@ -11,7 +12,7 @@ export default function Profile() {
   const [filePercentage, setFilePercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
-  const database = getFirestore(app);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if(file) {
@@ -37,6 +38,21 @@ export default function Profile() {
      )
     }
    )
+  }
+
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutStart());
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if(data.success===false) {
+        dispatch(signOutFailure(data.message));
+        return;
+      }
+      dispatch(signOutSuccess(data));
+    } catch (error) {
+      dispatch(signOutFailure(error.message));
+    }
   }
 
 
@@ -65,7 +81,7 @@ export default function Profile() {
       </form>
 
       <div className='flex justify-between mt-10'>
-        <button className='bg-transparent hover:text-red-600 hover:underline'>Sign out</button>
+        <button className='bg-transparent hover:text-red-600 hover:underline' onClick={handleSignOut}>Sign out</button>
         <button className='bg-transparent hover:text-red-600 hover:underline'>Delete account</button>
       </div>
     </div>
