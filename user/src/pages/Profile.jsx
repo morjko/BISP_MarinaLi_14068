@@ -2,18 +2,18 @@ import React, { useRef, useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
 import { app } from '../firebase';
-import { signOutFailure, signOutStart, signOutSuccess } from '../redux/user/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { signOutFailure, signOutStart, signOutSuccess, editUserStart, editUserSuccess, editUserFailure } from '../redux/user/userSlice';
 
 export default function Profile() {
-  const {currentUser} = useSelector((state) => state.user);
+  const {currentUser, error} = useSelector((state) => state.user);
   const fileRef = useRef(null);
   const [file, setFile] = useState(undefined);
   const [filePercentage, setFilePercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
-
+  const [editSuccess, setEditSuccess] = useState(false);
+  
   useEffect(() => {
     if(file) {
       handleFileUpload(file);
@@ -55,13 +55,40 @@ export default function Profile() {
     }
   }
 
+  const handleChange = (e) => {
+    setFormData({...formData, [e.target.id]: e.target.value})
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(editUserStart());
+      const res = await fetch(`/api/user/edit/${currentUser._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(editUserFailure(data.message));
+        return;
+      }
+      dispatch(editUserSuccess(data));
+      setEditSuccess(true);
+    } catch (error) {
+      dispatch(editUserFailure(error.message));
+    }
+  };
+
 
   return (
     <div className='max-w-lg mx-auto'>
       <div className='text-green-600 font-bold text-center text-2xl my-10'>My Profile</div>
-      <form className='flex flex-col gap-5'>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
         <input hidden type="file" ref={fileRef} accept='image/*' onChange={(e)=>setFile(e.target.files[0])} />
-        <img onClick={()=> fileRef.current.click()} className='rounded-full h-20 w-20 cursor-pointer self-center object-cover' src={formData.ava || currentUser.ava} alt="Image" />
+        <img onClick={()=> fileRef.current.click()} className='rounded-full h-36 w-36 cursor-pointer self-center object-cover' src={formData.ava || currentUser.ava} alt="Image" />
         <p className='text-center text-sm'>
         {fileUploadError ? (
             <span className='text-red-600'>File should be less than 3 MB</span>
@@ -75,9 +102,11 @@ export default function Profile() {
             ''
           )}
         </p>
-        <input type="text" placeholder='username' id='username' className='border p-2' />
-        <input type="email" placeholder='email' id='email' className='border p-2' />
-        <button className='p-2 bg-green-600 text-white hover:underline'>Edit personal information</button>
+        <p className='text-red-600 text-center'>{error ? error: ''}</p>
+        <p className='text-green-600 text-center'>{editSuccess ? 'Your profile information has been edited successfully' : ''}</p>
+        <input onChange={handleChange} defaultValue={currentUser.username} type="text" placeholder='username' id='username' className='border p-2' />
+        <input onChange={handleChange} defaultValue={currentUser.email} type="email" placeholder='email' id='email' className='border p-2' />
+        <button className='p-2 bg-green-600 text-white hover:underline'>Edit profile</button>
       </form>
 
       <div className='flex justify-between mt-10'>

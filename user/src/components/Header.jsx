@@ -22,7 +22,7 @@ export default function Header() {
             </Link>
             <Link to='/profile'>
             {currentUser ? (
-              <img className='h-7 w-8 rounded-full object-cover' src= {currentUser.ava} alt="" />
+              <img className='h-8 w-8 rounded-full object-cover' src= {currentUser.ava} alt="" />
             ) : (
               <li className='hover:underline'>Sign In</li>
             )}
