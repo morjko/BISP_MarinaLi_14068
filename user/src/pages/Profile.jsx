@@ -124,7 +124,7 @@ export default function Profile() {
         <p className='text-green-600 text-center'>{editSuccess ? 'Your profile information has been edited successfully' : ''}</p>
         <input onChange={handleChange} defaultValue={currentUser.username} type="text" placeholder='username' id='username' className='border p-2' />
         <input onChange={handleChange} defaultValue={currentUser.email} type="email" placeholder='email' id='email' className='border p-2' />
-        <button className='p-2 bg-green-600 text-white hover:underline'>Edit profile</button>
+        <button className='p-2 bg-green-600 text-white hover:underline'>Save profile info</button>
       </form>
 
       <div className='flex justify-between mt-10'>
