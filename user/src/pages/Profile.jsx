@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
 import { app } from '../firebase';
-import { signOutFailure, signOutStart, signOutSuccess, editUserStart, editUserSuccess, editUserFailure } from '../redux/user/userSlice';
+import { signOutFailure, signOutStart, signOutSuccess, editUserStart, editUserSuccess, editUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure } from '../redux/user/userSlice';
+import { disconnect } from 'mongoose';
 
 export default function Profile() {
   const {currentUser, error} = useSelector((state) => state.user);
@@ -82,6 +83,23 @@ export default function Profile() {
     }
   };
 
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE'
+      })
+      const data = await res.json;
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  }
+
 
   return (
     <div className='max-w-lg mx-auto'>
@@ -111,7 +129,7 @@ export default function Profile() {
 
       <div className='flex justify-between mt-10'>
         <button className='bg-transparent hover:text-red-600 hover:underline' onClick={handleSignOut}>Sign out</button>
-        <button className='bg-transparent hover:text-red-600 hover:underline'>Delete account</button>
+        <button className='bg-transparent hover:text-red-600 hover:underline' onClick={handleDeleteUser}>Delete account</button>
       </div>
     </div>
   )
