@@ -34,6 +34,10 @@ const advertSchema = new mongoose.Schema(
             type: Boolean,
             required: true
         },
+        others: {
+            type: Boolean,
+            required: true
+        },
         imageUrls: {
             type: Array,
             required: true
