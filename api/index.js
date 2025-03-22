@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
+import advertRouter from './routes/advert.route.js';
 import dotenv from 'dotenv';
 dotenv.config();
 import cookieParser from 'cookie-parser';
@@ -27,6 +28,9 @@ app.use('/api/user', userRouter);
 
 //all routes in authRouter, will be at '/api/auth' endpoint
 app.use('/api/auth', authRouter);
+
+//all routes in advertRouter, will be at '/api/advert' endpoint
+app.use('/api/advert', advertRouter);
 
 //middleware to deal with errors
 app.use((err, req, res, next) => {
