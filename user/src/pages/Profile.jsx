@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
 import { app } from '../firebase';
 import { signOutFailure, signOutStart, signOutSuccess, editUserStart, editUserSuccess, editUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure } from '../redux/user/userSlice';
-import { disconnect } from 'mongoose';
 
 export default function Profile() {
   const {currentUser, error} = useSelector((state) => state.user);
@@ -125,6 +125,9 @@ export default function Profile() {
         <input onChange={handleChange} defaultValue={currentUser.username} type="text" placeholder='username' id='username' className='border p-2' />
         <input onChange={handleChange} defaultValue={currentUser.email} type="email" placeholder='email' id='email' className='border p-2' />
         <button className='p-2 bg-green-600 text-white hover:underline'>Save profile info</button>
+        <Link to={"/create-advert"} className='p-2 text-white bg-rose-400 text-center hover:underline'>
+           Create Advert
+        </Link>
       </form>
 
       <div className='flex justify-between mt-10'>
