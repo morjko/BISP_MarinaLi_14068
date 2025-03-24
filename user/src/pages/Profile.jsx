@@ -126,7 +126,7 @@ export default function Profile() {
         <input onChange={handleChange} defaultValue={currentUser.email} type="email" placeholder='email' id='email' className='border p-2' />
         <button className='p-2 bg-green-600 text-white hover:underline'>Save profile info</button>
         <Link to={"/create-advert"} className='p-2 text-white bg-rose-400 text-center hover:underline'>
-           Create Advert
+           Become a Pet Sitter
         </Link>
       </form>
 
