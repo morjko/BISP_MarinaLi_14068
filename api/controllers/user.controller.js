@@ -1,6 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import User from '../models/user.model.js';
 import { errorHandler } from '../utils/error.js';
+import Advert from '../models/advert.model.js';
 
 export const test = (req, res) => {
     res.send('Success',
@@ -38,5 +39,18 @@ export const deleteUser = async (req, res, next) => {
         res.status(200).json('Your profile has been deleted!');
     } catch (error) {
         next(error);
+    }
+}
+
+export const viewUserAdvert = async (req, res, next) => {
+    if (req.user.id === req.params.id) {
+        try {
+            const advert = await Advert.find({userRef: req.params.id});
+            res.status(200).json(advert);
+        } catch (error) {
+            next(error);
+        }
+    } else {
+        return next(errorHandler(401, 'Can view only own advert!'));
     }
 }
