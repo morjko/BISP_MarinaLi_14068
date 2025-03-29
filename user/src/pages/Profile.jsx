@@ -128,9 +128,9 @@ export default function Profile() {
         return;
       }
 
-      setUserAdvert((prev) => prev.filter((advert) => advert._id !== advertId))
+      setUserAdvert((prev) => prev.filter((advert) => advert._id !== advertId));
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
   }
 

@@ -28,3 +28,26 @@ export const deleteAdvert = async (req, res, next) => {
         next(error);
     }
 }
+
+export const editAdvert = async (req, res, next) => {
+    const advert = await Advert.findById(req.params.id);
+    
+    if (!advert) {
+        return next(errorHandler(404, 'Advert is not found'));
+    }
+
+    if (req.user.id !== advert.userRef) {
+        return next(errorHandler(401, 'You can edit only own advert'))
+    }
+
+    try {
+        const editedAdvert = await Advert.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {new: true}
+        );
+        res.status(200).json(editedAdvert);
+    } catch (error) {
+        next(error);
+    }
+}
