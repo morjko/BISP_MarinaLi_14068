@@ -110,7 +110,7 @@ export default function CreateAdvert() {
             if (data.success === false) {
                 setError(data.message);
             }
-            navigate(`/advert/${data._id}`);
+            navigate('/profile');
         } catch (error) {
             setError(error.message);
         }

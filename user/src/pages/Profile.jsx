@@ -117,6 +117,23 @@ export default function Profile() {
     }
   }
 
+  const handleAdvertDelete = async (advertId) => {
+    try {
+      const res = await fetch(`/api/advert/delete/${advertId}`, {
+        method: 'DELETE'
+      })
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+
+      setUserAdvert((prev) => prev.filter((advert) => advert._id !== advertId))
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   return (
     <div className='max-w-lg mx-auto'>
       <div className='text-green-600 font-bold text-center text-2xl my-10'>My Profile</div>
@@ -158,7 +175,7 @@ export default function Profile() {
                </Link>
                <div className='flex gap-3'>
                  <button className='text-green-600'>Edit</button>
-                 <button className='text-red-600'>Delete</button>
+                 <button className='text-red-600' onClick={() => handleAdvertDelete(advert._id)}>Delete</button>
                </div>
           </div>
         ))}
