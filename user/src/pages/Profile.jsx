@@ -14,6 +14,8 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
   const [editSuccess, setEditSuccess] = useState(false);
+  const [viewAdvertError, setViewAdvertError] = useState(false);
+  const [userAdvert, setUserAdvert] = useState([]);
   
   useEffect(() => {
     if(file) {
@@ -100,6 +102,20 @@ export default function Profile() {
     }
   }
 
+  const handleViewAdvert = async () => {
+    try {
+      setViewAdvertError(false);
+      const res = await fetch(`/api/user/advert/${currentUser._id}`)
+      const data = await res.json();
+      if (data.success === false) {
+        setViewAdvertError(true);
+        return;
+      }
+      setUserAdvert(data);
+    } catch (error) {
+      setViewAdvertError(true);
+    }
+  }
 
   return (
     <div className='max-w-lg mx-auto'>
@@ -130,10 +146,28 @@ export default function Profile() {
         </Link>
       </form>
 
-      <div className='flex justify-between mt-10'>
-        <button className='bg-transparent hover:text-red-600 hover:underline' onClick={handleSignOut}>Sign out</button>
-        <button className='bg-transparent hover:text-red-600 hover:underline' onClick={handleDeleteUser}>Delete account</button>
-      </div>
-    </div>
-  )
+      <button onClick={handleViewAdvert} className='text-rose-400 hover:underline w-full my-5'>View an Advert</button>
+      <p className='text-red-600 text-center'>{viewAdvertError ? 'Error to view an advert' : ''}</p>
+
+      {userAdvert && userAdvert.length > 0 && 
+      <div>
+        {userAdvert.map((advert) => (
+          <div key={advert._id} className='border p-2 flex justify-between items-center'>
+              <Link to={`/advert/${advert._id}`} className='text-rose-400 font-bold hover:underline'>
+                 <p>{advert.name}</p>
+               </Link>
+               <div className='flex gap-3'>
+                 <button className='text-green-600'>Edit</button>
+                 <button className='text-red-600'>Delete</button>
+               </div>
+          </div>
+        ))}
+        </div>}
+
+        <div className='flex justify-between my-5'>
+          <button className='bg-transparent hover:text-red-600 hover:underline' onClick={handleSignOut}>Sign out</button>
+          <button className='bg-transparent hover:text-red-600 hover:underline' onClick={handleDeleteUser}>Delete account</button>
+        </div>
+     </div>
+   );
 }
