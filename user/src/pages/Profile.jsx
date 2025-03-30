@@ -174,7 +174,9 @@ export default function Profile() {
                  <p>{advert.name}</p>
                </Link>
                <div className='flex gap-3'>
-                 <button className='text-green-600'>Edit</button>
+                <Link to={`/edit-advert/${advert._id}`}>
+                <button className='text-green-600'>Edit</button>
+                </Link>
                  <button className='text-red-600' onClick={() => handleAdvertDelete(advert._id)}>Delete</button>
                </div>
           </div>

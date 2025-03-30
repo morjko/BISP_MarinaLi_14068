@@ -51,3 +51,15 @@ export const editAdvert = async (req, res, next) => {
         next(error);
     }
 }
+
+export const getAdvert = async (req, res, next) => {
+    try {
+        const advert = await Advert.findById(req.params.id);
+        if (!advert) {
+            return next(errorHandler(404, 'Advert is not found'));
+        }
+        res.status(200).json(advert);
+    } catch (error) {
+        next(error);
+    }
+}

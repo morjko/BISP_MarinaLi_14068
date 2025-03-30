@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateAdvert from "./pages/CreateAdvert.jsx";
+import EditAdvert from "./pages/EditAdvert.jsx";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-advert" element={<CreateAdvert />} />
+          <Route path="/edit-advert/:advertId" element={<EditAdvert />} />
         </Route>
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
