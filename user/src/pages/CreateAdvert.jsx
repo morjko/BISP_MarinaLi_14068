@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function CreateAdvert() {
     const [files, setFiles] = useState([]);
     const [formData, setFormData] = useState({
-        fileUrls: [],
+        imageUrls: [],
         name: '',
         bio: '',
         location: '',
@@ -26,14 +26,14 @@ export default function CreateAdvert() {
     console.log(formData)
 
     const handleFileSubmit = (e) => {
-        if (files.length > 0 && files.length + formData.fileUrls.length < 11) {
+        if (files.length > 0 && files.length + formData.imageUrls.length < 11) {
             const promises = [];
 
             for (let i = 0; i < files.length; i++) {
                 promises.push(storeFile(files[i]));
             }
             Promise.all(promises).then((urls) => {
-                setFormData({...formData, fileUrls: formData.fileUrls.concat(urls)});
+                setFormData({...formData, imageUrls: formData.imageUrls.concat(urls)});
                 setFileUploadError(false);
             }).catch((error) => {
                 setFileUploadError('There is an error while image upload (should be 3 MB per file)')
@@ -70,7 +70,7 @@ export default function CreateAdvert() {
     const handleFileDelete = (index) => {
         setFormData({
             ...formData,
-            fileUrls: formData.fileUrls.filter((_, i) => i !== index)
+            imageUrls: formData.imageUrls.filter((_, i) => i !== index)
         })
     }
 
@@ -93,7 +93,7 @@ export default function CreateAdvert() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            if (formData.fileUrls.length<1) return setError('Need to upload at least 1 image');
+            if (formData.imageUrls.length<1) return setError('Need to upload at least 1 image');
             setError(false);
             const res = await fetch('/api/advert/create', {
                 method: 'POST',
@@ -135,7 +135,7 @@ export default function CreateAdvert() {
                 </div>
                 <p className='text-red-600'>{fileUploadError && fileUploadError}</p>
                 {
-                    formData.fileUrls.length > 0 && formData.fileUrls.map((url, index) => (
+                    formData.imageUrls.length > 0 && formData.imageUrls.map((url, index) => (
                         <div key={url} className='flex justify-between items-center border border-green-600 p-4'>
                             <img src={url} alt="Advert image" className='h-20 w-20 object-contain' />
                             <button onClick={() => handleFileDelete(index)} type='button' className='hover:text-red-600'>Delete</button>
