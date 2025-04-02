@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreateAdvert from "./pages/CreateAdvert.jsx";
 import EditAdvert from "./pages/EditAdvert.jsx";
 import Advert from "./pages/Advert.jsx";
+import Search from "./pages/Search.jsx";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/search" element={<Search />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-advert" element={<CreateAdvert />} />
