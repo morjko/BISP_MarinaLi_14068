@@ -63,3 +63,57 @@ export const getAdvert = async (req, res, next) => {
         next(error);
     }
 }
+
+export const getAdverts = async (req, res, next) => {
+    try {
+        const limit = parseInt(req.query.limit) || 9;
+        const startIndex = parseInt(req.query.startIndex) || 0;
+
+        let dogs = req.query.dogs;
+        if (dogs === undefined || dogs === 'false') {
+            dogs = {$in: [false, true]}
+        }
+
+        let cats = req.query.cats;
+        if (cats === undefined || cats === 'false') {
+            cats = {$in: [false, true]}
+        }
+
+        let birds = req.query.birds;
+        if (birds === undefined || birds === 'false') {
+            birds = {$in: [false, true]}
+        }
+
+        let reptiles = req.query.reptiles;
+        if (reptiles === undefined || reptiles === 'false') {
+            reptiles = {$in: [false, true]}
+        }
+
+        let others = req.query.others;
+        if (others === undefined || others === 'false') {
+            others = {$in: [false, true]}
+        }
+
+        const searchTerm = req.query.searchTerm || '';
+
+        const sort = req.query.sort || 'createdAt';
+
+        const order = req.query.order || 'desc';
+
+        const adverts = await Advert.find({
+            name: {$regex: searchTerm, $options: 'i'},
+            dogs,
+            cats,
+            birds,
+            reptiles,
+            others
+        }).sort({
+            [sort]: order
+        }).limit(limit).skip(startIndex);
+
+        return res.status(200).json(adverts)
+
+    } catch (error) {
+        next(error);
+    }
+}
