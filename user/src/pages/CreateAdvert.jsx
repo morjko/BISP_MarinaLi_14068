@@ -170,7 +170,7 @@ export default function CreateAdvert() {
                         <span>Reptiles</span>
                     </div>
                     <div className='flex gap-1 items-center'>
-                        <input type="checkbox" id='others' className='h-3 w-3' />
+                        <input onChange={handleChange} checked={formData.others} type="checkbox" id='others' className='h-3 w-3' />
                         <span>Others</span>
                     </div>
                 </div>

@@ -5,3 +5,15 @@
 body {
     background-color: rgb(240, 253, 244);
 }
+
+.swiper {
+    width: 50%;
+}
+
+.swiper-button-next {
+    /* right: 35px!important; */
+}
+
+.swiper-button-prev {
+    /* left: 35px!important; */
+}
