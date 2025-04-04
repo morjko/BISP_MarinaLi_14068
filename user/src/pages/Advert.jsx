@@ -21,7 +21,7 @@ export default function Advert() {
   const [advert, setAdvert] = useState(null);
   const [error, setError] = useState(false);
   SwiperCore.use([Navigation]);
-  const {currentUser} = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const [contact, setContact] = useState(false);
 
   useEffect(() => {
@@ -43,61 +43,61 @@ export default function Advert() {
   }, [params.advertId]);
 
   return (
-    <div>
+    <div className="border border-green-600">
       {error && (
-        <p className="text-red-600 text-center my-10">
+        <p className="text-red-600 text-center my-10 font-nunito">
           There is an error to load an advert
         </p>
       )}
 
       {advert && !error && (
-        <div className="max-w-4xl mx-auto" style={{ display: "flex"}}>
-          <div className="max-w-2/3 w-1/2 h-[600px] text-green-600 flex flex-col gap-4 place-content-center mr-10">
-            <div>
-              <p className="text-4xl font-semibold">{advert.name}</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaMapMarkedAlt className="text-rose-400" />
+        <div
+          className="max-w-6xl mx-auto font-nunito"
+          style={{ display: "flex" }}
+        >
+          <div className="max-w-2/3 w-1/2 custom-height flex flex-col gap-4 place-content-center mr-10">
+            <p className="text-4xl font-bold">{advert.name}</p>
+
+            <div className="flex items-center gap-1 text-lg">
+              <FaMapMarkedAlt />
               <p>
                 {advert.location} -{" "}
-                <span className="font-bold">{advert.price}</span> UZS / hour
+                <span className="font-extrabold">{advert.price}</span> UZS /
+                hour
               </p>
             </div>
-            <div>
-              <p className="font-bold">
-                About <span className="text-sm">{advert.name}</span>
-              </p>
-              <p className="text-sm">{advert.bio}</p>
-            </div>
+
+            <div className="">{advert.bio}</div>
+
             <ul>
-              <p className="font-bold">Can look after:</p>
+              <p className="text-lg font-bold">Can look after:</p>
               {advert.dogs && (
                 <li className="flex items-center gap-2">
-                  <FaDog className="text-rose-400" />
+                  <FaDog />
                   Dogs
                 </li>
               )}
               {advert.cats && (
                 <li className="flex items-center gap-2">
-                  <FaCat className="text-rose-400" />
+                  <FaCat />
                   Cats
                 </li>
               )}
               {advert.birds && (
                 <li className="flex items-center gap-2">
-                  <FaKiwiBird className="text-rose-400" />
+                  <FaKiwiBird />
                   Birds
                 </li>
               )}
               {advert.reptiles && (
                 <li className="flex items-center gap-2">
-                  <FaFrog className="text-rose-400" />
+                  <FaFrog />
                   Reptiles
                 </li>
               )}
               {advert.others && (
                 <li className="flex items-end gap-2">
-                  <FaEllipsisH className="text-rose-400" />
+                  <FaEllipsisH />
                   Others
                 </li>
               )}
@@ -105,20 +105,23 @@ export default function Advert() {
 
             {currentUser && advert.userRef !== currentUser._id && !contact && (
               <div className="flex items-center gap-2">
-                <FaEnvelope className="text-rose-400 text-lg" />
-                <button onClick={() => setContact(true)} className="flex text-align-left text-rose-400 hover:underline uppercase font-bold text-lg">
+                <FaEnvelope className="text-green-600 text-lg" />
+                <button
+                  onClick={() => setContact(true)}
+                  className="flex text-align-left text-green-600 hover:underline uppercase font-bold text-lg"
+                >
                   Contact
                 </button>
               </div>
             )}
-            {contact && <Contact advert = {advert} />}
+            {contact && <Contact advert={advert} />}
           </div>
 
           <Swiper navigation>
             {advert.imageUrls.map((url) => (
               <SwiperSlide key={url}>
                 <div
-                  className="h-[600px]"
+                  className="custom-height"
                   style={{
                     background: `url(${url}) center no-repeat`,
                     backgroundSize: "350px",

@@ -26,11 +26,11 @@ export default function Contact({ advert }) {
     <>
       {sitter && (
         <div className="flex flex-col gap-2">
-          <p className="text-rose-400">
+          <p className="text-green-600 font-semibold">
             Contact <span className="font-bold">{sitter.username}</span>
           </p>
           <textarea
-            className="text-black w-full border p-2 border-rose-400"
+            className="w-full border p-2 border-green-600 rounded-md"
             placeholder="Enter message here"
             name="message"
             id="message"
@@ -40,7 +40,8 @@ export default function Contact({ advert }) {
           ></textarea>
           <Link
             to={`mailto:${sitter.email}?subject=Regarding your job advert&body=${message}`}
-            className="text-rose-400 font-semibold hover:underline">
+            className="text-green-600 font-bold hover:underline"
+          >
             Send
           </Link>
         </div>
