@@ -129,11 +129,11 @@ export default function Search() {
       <div className="p-10 border-b-2 md:border-r-2 md:min-h-screen">
         <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
           <div className="flex items-center gap-2">
-            <label className="whitespace-nowrap font-semibold text-green-600">
+            <label className="whitespace-nowrap font-nunito font-bold text-green-600">
               Search term:
             </label>
             <input
-              className="border border-rose-400 p-2 w-full rounded-md"
+              className="border border-rose-400 font-nunito p-2 w-full rounded-md"
               type="text"
               id="searchTerm"
               placeholder="Search"
@@ -142,9 +142,9 @@ export default function Search() {
             />
           </div>
 
-          <div className="flex items-center gap-4 flex-wrap">
-            <label className="font-semibold text-green-600">Pet type:</label>
-            <div className="flex gap-2">
+          <div className="flex items-center gap-4 flex-wrap font-nunito">
+            <label className="font-bold text-green-600">Pet type:</label>
+            <div className="flex gap-1 font-nunito">
               <input
                 type="checkbox"
                 id="dogs"
@@ -153,7 +153,7 @@ export default function Search() {
               />
               <span>Dogs</span>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               <input
                 type="checkbox"
                 id="cats"
@@ -162,7 +162,7 @@ export default function Search() {
               />
               <span>Cats</span>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               <input
                 type="checkbox"
                 id="birds"
@@ -171,7 +171,7 @@ export default function Search() {
               />
               <span>Birds</span>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               <input
                 type="checkbox"
                 id="reptiles"
@@ -180,7 +180,7 @@ export default function Search() {
               />
               <span>Reptiles</span>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               <input
                 type="checkbox"
                 id="others"
@@ -191,10 +191,10 @@ export default function Search() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="font-nunito flex items-center gap-4">
             <label className="font-semibold text-green-600">Sort:</label>
             <select
-              className="border border-rose-400 p-2 rounded-md"
+              className="font-nunito border border-rose-400 p-2 rounded-md"
               id="sort_order"
               defaultValue={"created_at_desc"}
               onChange={handleChange}
@@ -206,13 +206,13 @@ export default function Search() {
             </select>
           </div>
 
-          <button className="bg-rose-400 text-white uppercase p-2 rounded-md hover:bg-green-600">
+          <button className="bg-green-600 text-white font-nunito uppercase p-2 rounded-md hover:bg-rose-400">
             Search
           </button>
         </form>
       </div>
 
-      <div className="p-10 flex flex-col gap-3">
+      <div className="font-nunito p-10 flex flex-col gap-3">
         <h1 className="text-2xl font-bold text-green-600 mb-5">Results:</h1>
         <div className="flex flex-wrap gap-3">
           {!loading && adverts.length === 0 && (
@@ -232,7 +232,7 @@ export default function Search() {
               onClick={onShowMoreClick}
               className="text-rose-400 hover:underline mt-5 w-full"
             >
-              Show More
+              Show More ...
             </button>
           )}
         </div>
