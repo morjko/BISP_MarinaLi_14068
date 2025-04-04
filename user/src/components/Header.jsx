@@ -25,49 +25,48 @@ export default function Header() {
   }, [location.search]);
 
   return (
-    <header className="bg-rose-400 mx-auto items-center">
-      <div className="flex justify-between items-center p-5 max-w-6xl mx-auto">
-        <Link to="/">
-          <h1 className="text-rose-50 font-bold text-sm sm:text-xl">
-            <a>FurryFriends</a>
-          </h1>
+    <header className="bg-white mx-auto items-center">
+      <div className="flex justify-between items-center py-5 max-w-6xl mx-auto">
+        <Link
+          to="/"
+          className="flex gap-1 font-nunito font-extrabold text-green-600 text-lg sm:text-2xl hover:scale-105 duration-500"
+        >
+          FurryFriends
+          <img src="header-logo.png" className="h-[30px] w-[30px]" />
         </Link>
 
-        <ul className="text-rose-50 flex gap-6">
-          <Link to="/">
-            <li className="hover:underline hidden sm:inline">Home</li>
-          </Link>
-          <Link to="/about">
-            <li className="hover:underline hidden sm:inline">About</li>
-          </Link>
-          <Link to="/profile">
-            {currentUser ? (
-              <img
-                className="h-8 w-8 rounded-full object-cover"
-                src={currentUser.ava}
-                alt=""
-              />
-            ) : (
-              <li className="hover:underline">Sign In</li>
-            )}
-          </Link>
-        </ul>
-
         <form
-          className="bg-rose-50 flex items-center p-3"
+          className="flex items-center p-3 border border-green-600 rounded-md"
           onSubmit={handleSubmit}
         >
           <input
             type="text"
             placeholder="Search "
-            className="text-rose-400 bg-transparent focus:outline-none w-24 sm:w-64"
+            className="w-24 sm:w-64 focus:outline-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           ></input>
           <button>
-            <FaSearch className="text-rose-400"></FaSearch>
+            <FaSearch className="text-green-600"></FaSearch>
           </button>
         </form>
+
+        <div className="flex gap-3 items-center text-green-600 font-semibold">
+          <Link to="/" className="hover:underline">
+            Home
+          </Link>
+          <Link to="/profile">
+            {currentUser ? (
+              <img
+                className="h-10 w-10 rounded-full object-cover"
+                src={currentUser.ava}
+                alt=""
+              />
+            ) : (
+              <p className="hover:underline">Sign In</p>
+            )}
+          </Link>
+        </div>
       </div>
     </header>
   );
