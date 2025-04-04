@@ -43,7 +43,7 @@ export default function Advert() {
   }, [params.advertId]);
 
   return (
-    <div className="border border-green-600">
+    <div>
       {error && (
         <p className="text-red-600 text-center my-10 font-nunito">
           There is an error to load an advert
@@ -55,66 +55,70 @@ export default function Advert() {
           className="max-w-6xl mx-auto font-nunito"
           style={{ display: "flex" }}
         >
-          <div className="max-w-2/3 w-1/2 custom-height flex flex-col gap-4 place-content-center mr-10">
-            <p className="text-4xl font-bold">{advert.name}</p>
+          <div className="max-w-2/3 w-1/2 custom-height place-content-center mr-10">
+            <div className="bg-white rounded-md h-[500px] flex flex-col gap-4 place-content-center p-4 hover:scale-105 duration-500">
+              <p className="text-4xl font-extrabold">{advert.name}</p>
 
-            <div className="flex items-center gap-1 text-lg">
-              <FaMapMarkedAlt />
-              <p>
-                {advert.location} -{" "}
-                <span className="font-extrabold">{advert.price}</span> UZS /
-                hour
-              </p>
-            </div>
-
-            <div className="">{advert.bio}</div>
-
-            <ul>
-              <p className="text-lg font-bold">Can look after:</p>
-              {advert.dogs && (
-                <li className="flex items-center gap-2">
-                  <FaDog />
-                  Dogs
-                </li>
-              )}
-              {advert.cats && (
-                <li className="flex items-center gap-2">
-                  <FaCat />
-                  Cats
-                </li>
-              )}
-              {advert.birds && (
-                <li className="flex items-center gap-2">
-                  <FaKiwiBird />
-                  Birds
-                </li>
-              )}
-              {advert.reptiles && (
-                <li className="flex items-center gap-2">
-                  <FaFrog />
-                  Reptiles
-                </li>
-              )}
-              {advert.others && (
-                <li className="flex items-end gap-2">
-                  <FaEllipsisH />
-                  Others
-                </li>
-              )}
-            </ul>
-
-            {currentUser && advert.userRef !== currentUser._id && !contact && (
-              <div className="flex items-center gap-2">
-                <FaEnvelope className="text-green-600 text-lg" />
-                <button
-                  onClick={() => setContact(true)}
-                  className="flex text-align-left text-green-600 hover:underline uppercase font-bold text-lg"
-                >
-                  Contact
-                </button>
+              <div className="flex items-center gap-1 text-lg text-green-600">
+                <FaMapMarkedAlt />
+                <p>
+                  {advert.location} -{" "}
+                  <span className="font-extrabold">{advert.price}</span> UZS /
+                  hour
+                </p>
               </div>
-            )}
-            {contact && <Contact advert={advert} />}
+
+              <div className="">{advert.bio}</div>
+
+              <ul>
+                <p className="text-lg font-bold text-green-600">Can look after:</p>
+                {advert.dogs && (
+                  <li className="flex items-center gap-2">
+                    <FaDog />
+                    Dogs
+                  </li>
+                )}
+                {advert.cats && (
+                  <li className="flex items-center gap-2">
+                    <FaCat />
+                    Cats
+                  </li>
+                )}
+                {advert.birds && (
+                  <li className="flex items-center gap-2">
+                    <FaKiwiBird />
+                    Birds
+                  </li>
+                )}
+                {advert.reptiles && (
+                  <li className="flex items-center gap-2">
+                    <FaFrog />
+                    Reptiles
+                  </li>
+                )}
+                {advert.others && (
+                  <li className="flex items-end gap-2">
+                    <FaEllipsisH />
+                    Others
+                  </li>
+                )}
+              </ul>
+
+              {currentUser &&
+                advert.userRef !== currentUser._id &&
+                !contact && (
+                  <div className="flex items-center gap-2">
+                    <FaEnvelope className="text-green-600 text-lg" />
+                    <button
+                      onClick={() => setContact(true)}
+                      className="flex text-align-left text-green-600 hover:underline uppercase font-bold text-lg"
+                    >
+                      Contact
+                    </button>
+                  </div>
+                )}
+              {contact && <Contact advert={advert} />}
+            </div>
           </div>
 
           <Swiper navigation>
@@ -124,7 +128,7 @@ export default function Advert() {
                   className="custom-height"
                   style={{
                     background: `url(${url}) center no-repeat`,
-                    backgroundSize: "350px",
+                    backgroundSize: "500px",
                   }}
                 ></div>
               </SwiperSlide>
