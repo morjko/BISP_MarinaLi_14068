@@ -58,7 +58,7 @@ export default function SignUp() {
       </div>
 
       {error && (
-        <p className="text-red-700 font-nunito mb-12 text-center">{error}</p>
+        <p className="text-red-700 font-nunito font-semibold mb-5 text-center">*{error}</p>
       )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
