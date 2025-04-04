@@ -6,8 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+      nunito: ["Nunito"]
+      },
       backgroundImage: {
-        backgroundImg: "url('/bg_image.jpg')"
+        homeBackgroundImg: "url('/home-page.jpg')"
       }
     },
   },

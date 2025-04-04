@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Open+Sans&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,10 +12,6 @@ body {
     width: 50%;
 }
 
-.swiper-button-next {
-    /* right: 35px!important; */
-}
-
-.swiper-button-prev {
-    /* left: 35px!important; */
+.custom-height {
+    height: calc(100vh - 88px);
 }
