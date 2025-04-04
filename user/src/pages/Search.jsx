@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AdvertItem from "../components/AdvertCard.jsx";
 
 export default function Search() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [adverts, setAdverts] = useState([]);
-  
+  const [showMore, setShowMore] = useState(false);
+
   const [sidebarData, setSidebarData] = useState({
     searchTerm: "",
     dogs: false,
@@ -51,15 +53,20 @@ export default function Search() {
     }
 
     const fetchData = async () => {
-        setLoading(true);
-        const searchQuery = urlParams.toString();
-        const res = await fetch(`/api/advert/get?${searchQuery}`);
-        const data = await res.json();
-        setAdverts(data);
-        setLoading(false);
-    } 
+      setLoading(true);
+      setShowMore(false);
+      const searchQuery = urlParams.toString();
+      const res = await fetch(`/api/advert/get?${searchQuery}`);
+      const data = await res.json();
+      if (data.length > 7) {
+        setShowMore(true);
+      } else {
+        setShowMore(false);
+      }
+      setAdverts(data);
+      setLoading(false);
+    };
     fetchData();
-
   }, [location.search]);
 
   const handleChange = (e) => {
@@ -102,6 +109,20 @@ export default function Search() {
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
+
+  const onShowMoreClick = async () => {
+    const numberOfAdverts = adverts.length;
+    const startIndex = numberOfAdverts;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('startIndex', startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`/api/advert/get?${searchQuery}`);
+    const data = await res.json();
+    if (data.length < 8) {
+      setShowMore(false);
+    }
+    setAdverts([...adverts, ...data]);
+  }
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -191,8 +212,30 @@ export default function Search() {
         </form>
       </div>
 
-      <div className="p-10">
-        <h1 className="text-2xl font-bold text-green-600">Results:</h1>
+      <div className="p-10 flex flex-col gap-3">
+        <h1 className="text-2xl font-bold text-green-600 mb-5">Results:</h1>
+        <div className="flex flex-wrap gap-3">
+          {!loading && adverts.length === 0 && (
+            <p className="text-lg text-rose-400 font-semibold">
+              No matches found
+            </p>
+          )}
+
+          {!loading &&
+            adverts &&
+            adverts.map((advert) => (
+              <AdvertItem key={advert._id} advert={advert} />
+            ))}
+
+          {showMore && (
+            <button
+              onClick={onShowMoreClick}
+              className="text-rose-400 hover:underline mt-5 w-full"
+            >
+              Show More
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
