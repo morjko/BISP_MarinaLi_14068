@@ -209,7 +209,7 @@ export default function CreateAdvert() {
             formData.imageUrls.map((url, index) => (
               <div
                 key={url}
-                className="flex justify-between items-center border border-green-600 p-4"
+                className="flex justify-between items-center border border-green-600 p-3"
               >
                 <img
                   src={url}
@@ -219,7 +219,7 @@ export default function CreateAdvert() {
                 <button
                   onClick={() => handleFileDelete(index)}
                   type="button"
-                  className="hover:text-red-600"
+                  className="hover:text-red-600 font-nunito"
                 >
                   Delete
                 </button>
@@ -236,7 +236,7 @@ export default function CreateAdvert() {
               type="number"
               id="price"
               min="10000"
-              className="border border-grey p-3 w-15 h-4"
+              className="border border-green-600 p-3 w-15 h-7 rounded-md"
             />
           </div>
 
@@ -297,7 +297,7 @@ export default function CreateAdvert() {
             </div>
           </div>
 
-          <button className="bg-green-600 text-white rounded-md p-3 font-nunito hover:bg-rose-400 uppercase mt-2">
+          <button className="bg-green-600 text-white rounded-md p-3 font-nunito hover:bg-rose-400 uppercase mt-1">
             Create advert
           </button>
         </div>
