@@ -25,7 +25,7 @@ export default function Header() {
   }, [location.search]);
 
   return (
-    <header className="bg-white mx-auto items-center">
+    <header className="bg-white mx-auto items-center border-b-2 border-green-600">
       <div className="flex justify-between items-center py-5 max-w-6xl mx-auto">
         <Link
           to="/"
