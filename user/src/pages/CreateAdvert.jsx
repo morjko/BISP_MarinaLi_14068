@@ -134,7 +134,7 @@ export default function CreateAdvert() {
       if (data.success === false) {
         setError(data.message);
       }
-      navigate("/profile");
+      navigate(`/advert/${data._id}`);
     } catch (error) {
       setError(error.message);
     }

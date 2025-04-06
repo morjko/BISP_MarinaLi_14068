@@ -12,7 +12,6 @@ export default {
       backgroundImage: {
         homeBackgroundImg: "url('/home-page.jpg')"
       },
-
     },
   },
   plugins: [],
