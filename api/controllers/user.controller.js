@@ -9,6 +9,7 @@ export const test = (req, res) => {
 };
 
 export const editUser = async (req, res, next) => {
+    //checks if user is the owner of profile
     if (req.user.id !== req.params.id) return next(errorHandler(401, 'You are allowed to edit only your own profile!'));
     try {
         if (req.body.password) {
@@ -32,6 +33,7 @@ export const editUser = async (req, res, next) => {
 }
 
 export const deleteUser = async (req, res, next) => {
+    //checks if user is the owner of profile
     if (req.user.id !== req.params.id) return next(errorHandler(401, 'You are allowed to delete only your own profile!'))
     try {
         await User.findByIdAndDelete(req.params.id);
@@ -43,6 +45,7 @@ export const deleteUser = async (req, res, next) => {
 }
 
 export const viewUserAdvert = async (req, res, next) => {
+    //checks if user is the owner of profile
     if (req.user.id === req.params.id) {
         try {
             const advert = await Advert.find({userRef: req.params.id});

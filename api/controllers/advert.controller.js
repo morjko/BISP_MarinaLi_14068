@@ -30,12 +30,14 @@ export const deleteAdvert = async (req, res, next) => {
 }
 
 export const editAdvert = async (req, res, next) => {
+    //checks if advert exists
     const advert = await Advert.findById(req.params.id);
     
     if (!advert) {
         return next(errorHandler(404, 'Advert is not found'));
     }
 
+    //checks if user is the owner of advert
     if (req.user.id !== advert.userRef) {
         return next(errorHandler(401, 'You can edit only own advert'))
     }
